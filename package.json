@@ -1,0 +1,7 @@
+{
+    "name": "translation-matcher",
+    "main": "./html/index.html",
+    "window": {
+        "toolbar": false
+    }
+}

@@ -1,0 +1,12 @@
+*.nw
+credits.html
+icudtl.dat
+lib/
+locales/
+natives_blob.bin
+nw
+nw_100_percent.pak
+nw_200_percent.pak
+resources.pak
+snapshot_blob.bin
+swiftshader/
