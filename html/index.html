@@ -1,13 +1,60 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <title>Translation Matcher</title>
+        <link href="./css/main.css" rel="stylesheet" />
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
     </head>
-    <body>
-        <input id="open" type="file" style="display:none" accept="text/*" />
-        <input id="save" type="file" nwsaveas style="display:none" accept="text/*" />
-        <textarea id="editor" style="position:fixed;top:0;bottom:0;left:0;right:0"></textarea>
+    <body ng-app="lokidemo">
+        <div class="container" ng-controller="DemoController">
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'Browse')" id="defaultOpen">Browse</button>
+                <button class="tablinks" onclick="openTab(event, 'addEdit')">Add/Edit</button>
+            </div>
 
-        <script src="../js/main.js"></script>
+            <div id="Browse" class="tabcontent">
+                    <div id="results">
+                        <table style="border: 0">
+                            <thead>
+                                <th>name</th>
+                                <th>age</th>
+                                <th>first language</th>
+                            </thead>
+                            <tr ng-repeat="c in contacts.data track by $index">
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.age }}</td>
+                                <td>{{ c.firstLanguage }}</td>
+                            </tr>
+                        </table>
+                    </div>
+            </div>
+
+            <div id="addEdit" class="tabcontent">
+                <div id="header">LokiJS Demo App </div>
+                <div style="clear: both"></div>
+                <div id="main">
+                    <h4>Insert data</h4>
+                    <span>name: </span><input type="text" ng-model="newContact.name" />
+                    <span>age: </span><input type="number" ng-model="newContact.age" />
+                    <span>first language: </span><input type="text" ng-model="newContact.firstLanguage" /> 
+                    <button ng-click="insert()" style="vertical-align: middle">Insert</button>
+                    <div id="displayDB">
+                        <table style="border: 0">
+                            <thead>
+                                <th></th>
+                                <th>name</th>
+                                <th>age</th>
+                                <th>first language</th>
+                            </thead>
+                            <tr ng-repeat="c in contacts.data track by $index">
+                                <td><button ng-click="delete(c)">delete</button>
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.age }}</td>
+                                <td>{{ c.firstLanguage }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="../js/main.js"></script>
     </body>
 </html>
