@@ -1,10 +1,11 @@
+// Begin function for entering data
 var loki = require('../node_modules/lokijs.min.js', { env: 'NODEJS'}),
     fs = require('fs'),
     app = angular.module('lokidemo', []);
 app.controller('DemoController', ['$scope', function ($scope) {
     var DB_FILE = 'oe_database.json';
-    $scope.newContact = {};
-    $scope.contacts;
+    $scope.newCitation = {};
+    $scope.citations;
     $scope.db;
     $scope.quit = function () {
         $scope.db.close();
@@ -23,27 +24,23 @@ app.controller('DemoController', ['$scope', function ($scope) {
         this.close(true); // don't forget this line, else you can't close window
     }); 
     $scope.insert = function () {
-        $scope.contacts.insert($scope.newContact);
-        $scope.newContact = {};
+        $scope.citations.insert($scope.newCitation);
+        $scope.newCitation = {};
     };
     $scope.delete = function (i) {
-        $scope.contacts.remove(i);
+        $scope.citations.remove(i);
     };
-    $scope.contacts;
+    $scope.citations;
     $scope.db = new loki(DB_FILE, { 
         env: 'NODEJS', 
         autoload: true,
         autoloadCallback: function() {
-            $scope.contacts = $scope.db.getCollection('contacts');
+            $scope.citations = $scope.db.getCollection('citations');
 
             // if the database did not exist we will initialize empty database here
-            if ($scope.contacts === null) {
-                $scope.contacts = $scope.db.addCollection('contacts');
-                $scope.contacts.insert({name: 'joe', age: 39, firstLanguage: 'italian'});
-                $scope.contacts.insert({name: 'dave', age: 30, firstLanguage: 'english'});
-                $scope.contacts.insert({name: 'tim', age: 30, firstLanguage: 'english'});
-                $scope.contacts.insert({name: 'jonas', age: 30, firstLanguage: 'swedish'});
-                $scope.contacts.insert({name: 'pedro', age: 30, firstLanguage: 'spanish'});
+            if ($scope.citations === null) {
+                $scope.citations = $scope.db.addCollection('citations');
+                $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5'});
             }
 
             console.log($scope);
@@ -54,6 +51,8 @@ app.controller('DemoController', ['$scope', function ($scope) {
     }
     );
 }]);
+// End function for entering data
+
 
 // Begin tab functionality
 document.getElementById("defaultOpen").click();
