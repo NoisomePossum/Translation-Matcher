@@ -23,6 +23,8 @@ app.controller('DemoController', ['$scope', function ($scope) {
         $scope.db.close();
         this.close(true); // don't forget this line, else you can't close window
     }); 
+
+    // Called when the Insert button is pressode on the HTML page
     $scope.insert = function () {
         $scope.citations.insert($scope.newCitation);
         $scope.newCitation = {};
@@ -40,7 +42,7 @@ app.controller('DemoController', ['$scope', function ($scope) {
             // if the database did not exist we will initialize empty database here
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
-                $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5'});
+                $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', versionOf: null});
             }
 
             console.log($scope);
