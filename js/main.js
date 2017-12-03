@@ -2,10 +2,13 @@
 var loki = require('../node_modules/lokijs.min.js', { env: 'NODEJS'}),
     fs = require('fs'),
     app = angular.module('lokidemo', []);
+
 app.controller('DemoController', ['$scope', function ($scope) {
     var DB_FILE = 'oe_database.json';
     $scope.newCitation = {};
+    $scope.newVerb = {};
     $scope.citations;
+    $scope.verbs;
     $scope.db;
     $scope.quit = function () {
         $scope.db.close();
@@ -24,10 +27,12 @@ app.controller('DemoController', ['$scope', function ($scope) {
         this.close(true); // don't forget this line, else you can't close window
     }); 
 
-    // Called when the Insert button is pressode on the HTML page
+    // Called when the Insert button is pressed on the HTML page
     $scope.insert = function () {
         $scope.citations.insert($scope.newCitation);
+        $scope.verbs.insert($scope.newVerb);
         $scope.newCitation = {};
+        $scope.newVerb = {};
     };
     $scope.delete = function (i) {
         $scope.citations.remove(i);
@@ -38,11 +43,14 @@ app.controller('DemoController', ['$scope', function ($scope) {
         autoload: true,
         autoloadCallback: function() {
             $scope.citations = $scope.db.getCollection('citations');
+            $scope.verbs = $scope.db.getCollection('verbs');
 
             // if the database did not exist we will initialize empty database here
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
                 $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', versionOf: null});
+                $scope.verbs = $scope.db.addCollection('verbs');
+                $scope.verbs.insert({verb: "mæg", tense: "futur", OEexpression: "present form", commentaire: "", transtype: "", discourse: "", extSource: "1"});
             }
 
             console.log($scope);
