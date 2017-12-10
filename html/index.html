@@ -4,48 +4,61 @@
         <meta charset="UTF-8">
         <script src="../js/angular.min.js"></script>
     </head>
-    <body ng-app="lokidemo">
-        <div class="container" ng-controller="DemoController">
+    <body ng-app="translationMatcher">
+        <div class="container" ng-controller="MatchController" ng-init="display()">
             <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'Browse')" id="defaultOpen">Browse</button>
                 <button class="tablinks" onclick="openTab(event, 'addEdit')">Add/Edit</button>
             </div>
 
             <div id="Browse" class="tabcontent">
-                    <div id="results">
-                        <table style="border: 0">
-                            <thead>
-                                <th>OEtext</th>
-                                <th>Oeuvre</th>
-                                <th>Edition</th>
-                                <th>Référence</th>
-                            </thead>
-                            <tr ng-repeat="c in citations.data track by $index">
-                                <td>{{ c.OEtext }}</td>
-                                <td>{{ c.oeuvre }}</td>
-                                <td>{{ c.edition }}</td>
-                                <td>{{ c.ref }}</td>
-                            </tr>
-                        </table>
-                        <table>
-                            <thead>
-                                <th>Verb</th>
-                                <th>Tense</th>
-                                <th>OEexpression</th>
-                                <th>Commentaire</th>
-                                <th>Type Trad.</th>
-                                <th>Type discours</th>
-                            </thead>
-                            <tr ng-repeat="v in verbs.data track by $index">
-                                <td>{{ v.verb }}</td>
-                                <td>{{ v.tense }}</td>
-                                <td>{{ v.OEexpression }}</td>
-                                <td>{{ v.commentaire }}</td>
-                                <td>{{ v.transtype }}</td>
-                                <td>{{ v.discourse }}</td>
-                            </tr>
-                        </table>
-                    </div>
+                <div ng-repeat="c in citations.data track by $index">
+                            <div>{{ c.OEtext }}</div>
+                            <div>{{ c.oeuvre }}</div>
+                            <div>{{ c.edition }}</div>
+                            <div>{{ c.ref }}</div>
+                            <div ng-repeat="v in c.verbs track by $index">
+                                <div>{{ v.verb }}</div>
+                                <div>{{ v.tense }}</div>
+                                <div>{{ v.OEexpression }}</div>
+                                <div>{{ v.commentaire }}</div>
+                                <div>{{ v.transtype }}</div>
+                                <div>{{ v.discourse }}</div>
+                            </div>
+                            <hr>
+                    <!-- <table style="border: 0"> -->
+                    <!--     <thead> -->
+                    <!--         <th>OEtext</th> -->
+                    <!--         <th>Oeuvre</th> -->
+                    <!--         <th>Edition</th> -->
+                    <!--         <th>Référence</th> -->
+                    <!--     </thead> -->
+                    <!--     <tr ng-repeat="c in citations.data track by $index"> -->
+                    <!--         <td>{{ c.OEtext }}</td> -->
+                    <!--         <td>{{ c.oeuvre }}</td> -->
+                    <!--         <td>{{ c.edition }}</td> -->
+                    <!--         <td>{{ c.ref }}</td> -->
+                    <!--     </tr> -->
+                    <!-- </table> -->
+                    <!-- <table> -->
+                    <!--     <thead> -->
+                    <!--         <th>Verb</th> -->
+                    <!--         <th>Tense</th> -->
+                    <!--         <th>OEexpression</th> -->
+                    <!--         <th>Commentaire</th> -->
+                    <!--         <th>Type Trad.</th> -->
+                    <!--         <th>Type discours</th> -->
+                    <!--     </thead> -->
+                    <!--     <tr ng-repeat="v in verbs.data.where(c.$loki===v.extSource)"> -->
+                    <!--         <td>{{ v.verb }}</td> -->
+                    <!--         <td>{{ v.tense }}</td> -->
+                    <!--         <td>{{ v.OEexpression }}</td> -->
+                    <!--         <td>{{ v.commentaire }}</td> -->
+                    <!--         <td>{{ v.transtype }}</td> -->
+                    <!--         <td>{{ v.discourse }}</td> -->
+                    <!--     </tr> -->
+                    <!-- </table> -->
+                </div>
             </div>
 
             <div id="addEdit" class="tabcontent">
