@@ -13,19 +13,21 @@
 
             <div id="Browse" class="tabcontent">
                 <div ng-repeat="c in citations.data track by $index">
-                            <div>{{ c.OEtext }}</div>
-                            <div>{{ c.oeuvre }}</div>
-                            <div>{{ c.edition }}</div>
-                            <div>{{ c.ref }}</div>
-                            <div ng-repeat="v in c.verbs track by $index">
-                                <div>{{ v.verb }}</div>
-                                <div>{{ v.tense }}</div>
-                                <div>{{ v.OEexpression }}</div>
-                                <div>{{ v.commentaire }}</div>
-                                <div>{{ v.transtype }}</div>
-                                <div>{{ v.discourse }}</div>
-                            </div>
-                            <hr>
+                    <!-- <div parse-text="{{ c }}"></div> -->
+                    <div ng-bind-html="highlightVerb(c.verbs, c.OEtext)"></div>
+                    <!-- <div ng-bind-html>{{ highlightVerb(c.verbs, c.OEtext) }}</div> -->
+                    <div>{{ c.oeuvre }}</div>
+                    <div>{{ c.edition }}</div>
+                    <div>{{ c.ref }}</div>
+                    <div ng-repeat="v in c.verbs track by $index">
+                        <div>{{ v.verb }}</div>
+                        <div>{{ v.tense }}</div>
+                        <div>{{ v.OEexpression }}</div>
+                        <div>{{ v.commentaire }}</div>
+                        <div>{{ v.transtype }}</div>
+                        <div>{{ v.discourse }}</div>
+                    </div>
+                    <hr>
                 </div>
             </div>
 
@@ -41,19 +43,22 @@
                     <span>Version Of: </span><input type="number" ng-model="newCitation.versionOf" /> 
                     <br />
                     <div ng-repeat="element in verbElements">
-                        <span>Verb: </span><input type="text" ng-model="newVerb.verb" />
-                        <span>Catégorie(tense equivalence): </span><input type="text" ng-model="newVerb.tense" />
-                        <span>Expression du futur en OE: </span><input type="text" ng-model="newVerb.OEexpression" />
-                        <span>Commentaire: </span><input type="text" ng-model="newVerb.commentaire" />
-                        <span>Type de traduction: </span><input type="text" ng-model="newVerb.transtype" />
-                        <span>Type de discours: </span><input type="text" ng-model="newVerb.discourse" />
-                        <span><a href ng-click="newItem()">+</a></span>
-                        <span ng-hide="verbElements.length == 1">
-                            <a href ng-click="verbElements.splice($index, 1)">remove</a>
-                        </span>
+                        <div id={{ element.id }} >
+                            <span>Verb: </span><input type="text" ng-model="element.verb" />
+                            <span>Catégorie(tense equivalence): </span><input type="text" ng-model="element.tense" />
+                            <span>Expression du futur en OE: </span><input type="text" ng-model="element.OEexpression" />
+                            <span>Commentaire: </span><input type="text" ng-model="element.commentaire" />
+                            <span>Type de traduction: </span><input type="text" ng-model="element.transtype" />
+                            <span>Type de discours: </span><input type="text" ng-model="element.discourse" />
+                            <span><a href ng-click="newItem()">+</a></span>
+                            <span ng-hide="verbElements.length == 1">
+                                <a href ng-click="verbElements.splice($index, 1)">remove</a>
+                            </span>
+                        </div>
+                        <div ng-bind="element.verb"></div>
                     </div>
                     <br />
-                    <button ng-click="insert()" style="vertical-align: middle">Insert</button>
+                    <button ng-click="insert(); counter=0; verbElements = [{id:counter}];" style="vertical-align: middle">Insert</button>
                     <div id="displayDB">
                         <table style="border: 0">
                             <thead>

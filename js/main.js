@@ -3,7 +3,7 @@ var loki = require('../node_modules/lokijs.min.js', { env: 'NODEJS'}),
     fs = require('fs'),
     app = angular.module('translationMatcher', []);
 
-app.controller('MatchController', ['$scope', function ($scope) {
+app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     var DB_FILE = 'oe_database.json';
     $scope.newCitation = {};
     $scope.newVerb = {};
@@ -29,11 +29,21 @@ app.controller('MatchController', ['$scope', function ($scope) {
 
     // Called when the Insert button is pressed on the HTML page
     $scope.insert = function () {
-        $scope.newCitation.verbs.push($scope.newVerb);
+        for (i=0; i<$scope.verbElements.length; i++) {
+            $scope.newCitation.verbs.push({
+                verb: $scope.verbElements[i].verb, 
+                OEexpression: $scope.verbElements[i].OEexpression,
+                commentaire: $scope.verbElements[i].commentaire,
+                transtype: $scope.verbElements[i].transtype,
+                discourse: $scope.verbElements[i].discourse
+            });
+        }
+        // $scope.newCitation.verbs.push($scope.newVerb);
         $scope.citations.insert($scope.newCitation);
         $scope.newCitation = {};
         $scope.newVerb = {};
         $scope.newCitation.verbs = [];
+        // counter = 0;
     };
     $scope.delete = function (i) {
         $scope.citations.remove(i);
@@ -59,16 +69,38 @@ app.controller('MatchController', ['$scope', function ($scope) {
         autosaveInterval : 5000
     }
     );
-    var counter = 0;
-    $scope.verbElements = [{id:counter}];
+    $scope.counter = 0;
+    $scope.verbElements = [{id:$scope.counter}];
     $scope.newItem = function($event){
-        counter++;
-        $scope.verbElements.push({id:counter});
+        $scope.counter++;
+        $scope.verbElements.push({id:$scope.counter});
         $event.preventDefault();
+    }
+    $scope.highlightVerb = function(object, text) {
+        var displayText = document.createElement('p');
+        // displayText.innerHTML = text;
+        var newText = text;
+        for (i=0; i<object.length; i++) {
+            // var highlightSpan = document.createElement('span');
+            // highlightSpan.style.backgroundColor = "yellow";
+            // highlightSpan.innerHTML = object[i].verb
+            newText = newText.replace(object[i].verb, "<span style='background-color:yellow;color:black;'>" + object[i].verb + "</span>");
+            // text = text.replace(/mæg/g, "dog");
+            // text += " yippie!";
+        }
+        // text = object;
+        // var newSpan = document.createElement("span");
+        // newSpan.innerHTML = newText;
+        return $sce.trustAsHtml(newText);
     }
 }]);
 // End function for entering data
 
+// app.directive("parseText", function(object) {
+//     return {
+//         template : object
+//     };
+// });
 
 // Begin tab functionality
 document.getElementById("defaultOpen").click();
