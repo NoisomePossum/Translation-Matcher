@@ -8,7 +8,7 @@ app.controller('MatchController', ['$scope', function ($scope) {
     $scope.newCitation = {};
     $scope.newVerb = {};
     $scope.citations;
-    $scope.verbs = [];
+    $scope.newCitation.verbs = [];
     $scope.db;
     $scope.quit = function () {
         $scope.db.close();
@@ -29,18 +29,16 @@ app.controller('MatchController', ['$scope', function ($scope) {
 
     // Called when the Insert button is pressed on the HTML page
     $scope.insert = function () {
-        // $scope.newCitation.verbs = [{ verb: 'newverb', tense: 'present' }];
-        $scope.newCitation.verbs = [$scope.newVerb];
+        $scope.newCitation.verbs.push($scope.newVerb);
         $scope.citations.insert($scope.newCitation);
-        // $scope.newVerb.extSource = $scope.newCitation.$loki;
-        // $scope.verbs.insert($scope.newVerb);
         $scope.newCitation = {};
         $scope.newVerb = {};
+        $scope.newCitation.verbs = [];
     };
     $scope.delete = function (i) {
         $scope.citations.remove(i);
     };
-    $scope.citations;
+    // TODO $scope.citations; also appears on line 10; can delete later?
     $scope.db = new loki(DB_FILE, { 
         env: 'NODEJS', 
         autoload: true,
@@ -52,8 +50,6 @@ app.controller('MatchController', ['$scope', function ($scope) {
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
                 $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', verbs: [{verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: ''}], versionOf: null});
-                // $scope.verbs = $scope.db.addCollection('verbs');
-                // $scope.verbs.insert({verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: '', extSource: '1'});
             }
 
             console.log($scope);
@@ -63,6 +59,13 @@ app.controller('MatchController', ['$scope', function ($scope) {
         autosaveInterval : 5000
     }
     );
+    var counter = 0;
+    $scope.verbElements = [{id:counter}];
+    $scope.newItem = function($event){
+        counter++;
+        $scope.verbElements.push({id:counter});
+        $event.preventDefault();
+    }
 }]);
 // End function for entering data
 

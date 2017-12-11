@@ -26,38 +26,6 @@
                                 <div>{{ v.discourse }}</div>
                             </div>
                             <hr>
-                    <!-- <table style="border: 0"> -->
-                    <!--     <thead> -->
-                    <!--         <th>OEtext</th> -->
-                    <!--         <th>Oeuvre</th> -->
-                    <!--         <th>Edition</th> -->
-                    <!--         <th>Référence</th> -->
-                    <!--     </thead> -->
-                    <!--     <tr ng-repeat="c in citations.data track by $index"> -->
-                    <!--         <td>{{ c.OEtext }}</td> -->
-                    <!--         <td>{{ c.oeuvre }}</td> -->
-                    <!--         <td>{{ c.edition }}</td> -->
-                    <!--         <td>{{ c.ref }}</td> -->
-                    <!--     </tr> -->
-                    <!-- </table> -->
-                    <!-- <table> -->
-                    <!--     <thead> -->
-                    <!--         <th>Verb</th> -->
-                    <!--         <th>Tense</th> -->
-                    <!--         <th>OEexpression</th> -->
-                    <!--         <th>Commentaire</th> -->
-                    <!--         <th>Type Trad.</th> -->
-                    <!--         <th>Type discours</th> -->
-                    <!--     </thead> -->
-                    <!--     <tr ng-repeat="v in verbs.data.where(c.$loki===v.extSource)"> -->
-                    <!--         <td>{{ v.verb }}</td> -->
-                    <!--         <td>{{ v.tense }}</td> -->
-                    <!--         <td>{{ v.OEexpression }}</td> -->
-                    <!--         <td>{{ v.commentaire }}</td> -->
-                    <!--         <td>{{ v.transtype }}</td> -->
-                    <!--         <td>{{ v.discourse }}</td> -->
-                    <!--     </tr> -->
-                    <!-- </table> -->
                 </div>
             </div>
 
@@ -72,12 +40,18 @@
                     <span>Référence: </span><input type="text" ng-model="newCitation.ref" /> 
                     <span>Version Of: </span><input type="number" ng-model="newCitation.versionOf" /> 
                     <br />
-                    <span>Verb: </span><input type="text" ng-model="newVerb.verb" />
-                    <span>Catégorie(tense equivalence): </span><input type="text" ng-model="newVerb.tense" />
-                    <span>Expression du futur en OE: </span><input type="text" ng-model="newVerb.OEexpression" />
-                    <span>Commentaire: </span><input type="text" ng-model="newVerb.commentaire" />
-                    <span>Type de traduction: </span><input type="text" ng-model="newVerb.transtype" />
-                    <span>Type de discours: </span><input type="text" ng-model="newVerb.discourse" />
+                    <div ng-repeat="element in verbElements">
+                        <span>Verb: </span><input type="text" ng-model="newVerb.verb" />
+                        <span>Catégorie(tense equivalence): </span><input type="text" ng-model="newVerb.tense" />
+                        <span>Expression du futur en OE: </span><input type="text" ng-model="newVerb.OEexpression" />
+                        <span>Commentaire: </span><input type="text" ng-model="newVerb.commentaire" />
+                        <span>Type de traduction: </span><input type="text" ng-model="newVerb.transtype" />
+                        <span>Type de discours: </span><input type="text" ng-model="newVerb.discourse" />
+                        <span><a href ng-click="newItem()">+</a></span>
+                        <span ng-hide="verbElements.length == 1">
+                            <a href ng-click="verbElements.splice($index, 1)">remove</a>
+                        </span>
+                    </div>
                     <br />
                     <button ng-click="insert()" style="vertical-align: middle">Insert</button>
                     <div id="displayDB">
