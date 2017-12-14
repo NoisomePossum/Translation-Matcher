@@ -71,13 +71,28 @@
                                 <th>Version of</th>
                             </thead>
                             <tr ng-repeat="c in citations.data track by $index">
-                                <td><button ng-click="delete(c)">delete</button></td>
-                                <td>{{ c.$loki }}</td>
-                                <td>{{ c.OEtext }}</td>
-                                <td>{{ c.oeuvre }}</td>
-                                <td>{{ c.edition }}</td>
-                                <td>{{ c.ref }}</td>
-                                <td>{{ c.versionOf }}</td>
+                                <td><button ng-hide="c.editing" ng-click="editItem(c)">edit</button><button ng-show="c.editing" ng-click="doneEditing(c, true)">save</button><button ng-show="c.editing" ng-click="doneEditing(c, false)">cancel</button><button ng-show="c.editing" ng-click="delete(c)">delete</button></td>
+                                <td>{{ c.$loki }} </td>
+                                <td>
+                                    <span ng-hide="c.editing" ng-dblclick="editItem(c)">{{ c.OEtext }}</span>
+                                    <input ng-show="c.editing" ng-model="c.OEtext" />
+                                </td>
+                                <td>
+                                    <span ng-hide="c.editing" ng-dblclick="editItem(c)">{{ c.oeuvre }}</span>
+                                    <input ng-show="c.editing" ng-model="c.oeuvre" />
+                                </td>
+                                <td>
+                                    <span ng-hide="c.editing" ng-dblclick="editItem(c)">{{ c.edition }}</span>
+                                    <input ng-show="c.editing" ng-model="c.edition" />
+                                </td>
+                                <td>
+                                    <span ng-hide="c.editing" ng-dblclick="editItem(c)">{{ c.ref }}</span>
+                                    <input ng-show="c.editing" ng-model="c.ref" />
+                                </td>
+                                <td>
+                                    <span ng-hide="c.editing" ng-dblclick="editItem(c)">{{ c.versionOf }}</span>
+                                    <input ng-show="c.editing" ng-model="c.versionOf" />
+                                </td>
                             </tr>
                         </table>
                     </div>

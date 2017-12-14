@@ -48,7 +48,20 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     $scope.delete = function (i) {
         $scope.citations.remove(i);
     };
-    // TODO $scope.citations; also appears on line 10; can delete later?
+    $scope.field;
+    $scope.editItem = function (item, value) {
+        item.editing = true;
+        $scope.field = value;
+    };
+    $scope.doneEditing = function (item, bool) {
+        item.editing = false;
+        var saveChanges = bool;
+        if (saveChanges) {
+            // var newEdit = $scope.citations.findOne({$loki:item.$loki});
+            // $scope.citations.update(newEdit);
+            $scope.citations.update(item);
+        }
+    };
     $scope.db = new loki(DB_FILE, { 
         env: 'NODEJS', 
         autoload: true,
@@ -56,7 +69,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             $scope.citations = $scope.db.getCollection('citations');
             $scope.verbs = $scope.db.getCollection('verbs');
 
-            // if the database did not exist we will initialize empty database here
+            // initialize empty database if one does not already exist
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
                 $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', verbs: [{verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: ''}], versionOf: null});
@@ -69,6 +82,11 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         autosaveInterval : 5000
     }
     );
+    // TODO Below solution for reseting db on clicking cancel doesn't work. Try to fix later.
+    // $scope.originalData = angular.copy($scope.citations);
+    // $scope.reset = function () {
+    //     $scope.db = angular.copy($scope.originalData);
+    // };
     $scope.counter = 0;
     $scope.verbElements = [{id:$scope.counter}];
     $scope.newItem = function($event){
@@ -78,29 +96,14 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     }
     $scope.highlightVerb = function(object, text) {
         var displayText = document.createElement('p');
-        // displayText.innerHTML = text;
         var newText = text;
         for (i=0; i<object.length; i++) {
-            // var highlightSpan = document.createElement('span');
-            // highlightSpan.style.backgroundColor = "yellow";
-            // highlightSpan.innerHTML = object[i].verb
             newText = newText.replace(object[i].verb, "<span style='background-color:yellow;color:black;'>" + object[i].verb + "</span>");
-            // text = text.replace(/mæg/g, "dog");
-            // text += " yippie!";
         }
-        // text = object;
-        // var newSpan = document.createElement("span");
-        // newSpan.innerHTML = newText;
         return $sce.trustAsHtml(newText);
     }
 }]);
 // End function for entering data
-
-// app.directive("parseText", function(object) {
-//     return {
-//         template : object
-//     };
-// });
 
 // Begin tab functionality
 document.getElementById("defaultOpen").click();
