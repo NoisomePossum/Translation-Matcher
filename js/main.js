@@ -40,16 +40,16 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
                 discourse: $scope.verbElements[i].discourse
             });
         }
-        for (i=0; i<$scope.latinExtracts.length; i++) {
-            $scope.latinCitations.push({
-                latinText: $scope.latinExtracts[i].latinText,
-                oeuvre: $scope.latinExtracts[i].oeuvre,
-                edition: $scope.latinExtracts[i].edition,
-                ref: $scope.latinExtracts[i].ref,
-                tradDe: $scope.newCitation.$loki
-            });
-        }
         $scope.citations.insert($scope.newCitation);
+        for (i=0; i<$scope.latinExtracts.length; i++) {
+            $scope.newLatinCitation.latinText = $scope.latinExtracts[i].latinText;
+            $scope.newLatinCitation.oeuvre = $scope.latinExtracts[i].oeuvre;
+            $scope.newLatinCitation.edition = $scope.latinExtracts[i].edition;
+            $scope.newLatinCitation.ref = $scope.latinExtracts[i].ref;
+            $scope.newLatinCitation.tradDe = $scope.citations.data[$scope.citations.data.length - 1].$loki;
+            $scope.latinCitations.insert($scope.newLatinCitation);
+            $scope.newLatinCitation = {};
+        }
         $scope.newCitation = {};
         $scope.newCitation.verbs = [];
     };
@@ -120,8 +120,11 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         }
         return $sce.trustAsHtml(newText);
     }
+    // $scope.search = function () {
+    //     var results = $scope.latinCitations.find($loki:);
+    // }
 }]);
-// End function for entering data
+// End controller function
 
 // Begin tab functionality
 document.getElementById("defaultOpen").click();

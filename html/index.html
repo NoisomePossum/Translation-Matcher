@@ -13,9 +13,8 @@
 
             <div id="Browse" class="tabcontent">
                 <div ng-repeat="c in citations.data track by $index">
-                    <!-- <div parse-text="{{ c }}"></div> -->
                     <div ng-bind-html="highlightVerb(c.verbs, c.OEtext)"></div>
-                    <!-- <div ng-bind-html>{{ highlightVerb(c.verbs, c.OEtext) }}</div> -->
+                    <div ng-repeat="l in latinCitations.data | filter : {tradDe : c.$loki}">{{ l.latinText }}</div>
                     <div>{{ c.oeuvre }}</div>
                     <div>{{ c.edition }}</div>
                     <div>{{ c.ref }}</div>
