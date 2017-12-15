@@ -42,23 +42,34 @@
                     <span>Référence: </span><input type="text" ng-model="newCitation.ref" /> 
                     <span>Version Of: </span><input type="number" ng-model="newCitation.versionOf" /> 
                     <br />
-                    <div ng-repeat="element in verbElements">
-                        <div id={{ element.id }} >
-                            <span>Verb: </span><input type="text" ng-model="element.verb" />
-                            <span>Catégorie(tense equivalence): </span><input type="text" ng-model="element.tense" />
-                            <span>Expression du futur en OE: </span><input type="text" ng-model="element.OEexpression" />
-                            <span>Commentaire: </span><input type="text" ng-model="element.commentaire" />
-                            <span>Type de traduction: </span><input type="text" ng-model="element.transtype" />
-                            <span>Type de discours: </span><input type="text" ng-model="element.discourse" />
-                            <span><a href ng-click="newItem()">+</a></span>
+                    <div ng-repeat="verb in verbElements">
+                        <div id={{ verb.id }} >
+                            <span>Verb: </span><input type="text" ng-model="verb.verb" />
+                            <span>Catégorie(tense equivalence): </span><input type="text" ng-model="verb.tense" />
+                            <span>Expression du futur en OE: </span><input type="text" ng-model="verb.OEexpression" />
+                            <span>Commentaire: </span><input type="text" ng-model="verb.commentaire" />
+                            <span>Type de traduction: </span><input type="text" ng-model="verb.transtype" />
+                            <span>Type de discours: </span><input type="text" ng-model="verb.discourse" />
+                            <span><a href ng-click="newVerbItem()">+</a></span>
                             <span ng-hide="verbElements.length == 1">
                                 <a href ng-click="verbElements.splice($index, 1)">remove</a>
                             </span>
                         </div>
-                        <div ng-bind="element.verb"></div>
+                    </div>
+                    <div ng-repeat="extract in latinExtracts">
+                        <div id={{ extract.id }} >
+                            <span>latText : </span><input type="text" ng-model="extract.latinText" />
+                            <span>Oeuvre : </span><input type="text" ng-model="extract.oeuvre" />
+                            <span>Edition : </span><input type="text" ng-model="extract.edition" />
+                            <span>Référence : </span><input type="text" ng-model="extract.ref" />
+                            <span><a href ng-click="newLatinItem()">+</a></span>
+                            <span ng-hide="latinExtracts.length == 1">
+                                <a href ng-click="latinExtracts.splice($index, 1)">remove</a>
+                            </span>
+                        </div>
                     </div>
                     <br />
-                    <button ng-click="insert(); counter=0; verbElements = [{id:counter}];" style="vertical-align: middle">Insert</button>
+                    <button ng-click="insert(); verbCounter=0; verbElements = [{id:counter}];" style="vertical-align: middle">Insert</button>
                     <div id="displayDB">
                         <table style="border: 0">
                             <thead>

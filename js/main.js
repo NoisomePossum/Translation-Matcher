@@ -1,14 +1,16 @@
 // Begin function for entering data
+// TODO Normalize variable names and HTML elements: either all French or all English
 var loki = require('../node_modules/lokijs.min.js', { env: 'NODEJS'}),
     fs = require('fs'),
     app = angular.module('translationMatcher', []);
 
 app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     var DB_FILE = 'oe_database.json';
-    $scope.newCitation = {};
-    $scope.newVerb = {};
     $scope.citations;
+    $scope.newCitation = {};
     $scope.newCitation.verbs = [];
+    $scope.latinCitations;
+    $scope.newLatinCitation = {}; 
     $scope.db;
     $scope.quit = function () {
         $scope.db.close();
@@ -38,20 +40,24 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
                 discourse: $scope.verbElements[i].discourse
             });
         }
-        // $scope.newCitation.verbs.push($scope.newVerb);
+        for (i=0; i<$scope.latinExtracts.length; i++) {
+            $scope.latinCitations.push({
+                latinText: $scope.latinExtracts[i].latinText,
+                oeuvre: $scope.latinExtracts[i].oeuvre,
+                edition: $scope.latinExtracts[i].edition,
+                ref: $scope.latinExtracts[i].ref,
+                tradDe: $scope.newCitation.$loki
+            });
+        }
         $scope.citations.insert($scope.newCitation);
         $scope.newCitation = {};
-        $scope.newVerb = {};
         $scope.newCitation.verbs = [];
-        // counter = 0;
     };
     $scope.delete = function (i) {
         $scope.citations.remove(i);
     };
-    $scope.field;
-    $scope.editItem = function (item, value) {
+    $scope.editItem = function (item) {
         item.editing = true;
-        $scope.field = value;
     };
     $scope.doneEditing = function (item, bool) {
         item.editing = false;
@@ -67,12 +73,17 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         autoload: true,
         autoloadCallback: function() {
             $scope.citations = $scope.db.getCollection('citations');
-            $scope.verbs = $scope.db.getCollection('verbs');
+            $scope.latinCitations = $scope.db.getCollection('latinCitations');
 
             // initialize empty database if one does not already exist
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
                 $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', verbs: [{verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: ''}], versionOf: null});
+            }
+            if ($scope.latinCitations === null) {
+                $scope.latinCitations = $scope.db.addCollection('latinCitations');
+                $scope.latinCitations.insert({latinText: 'Nullus poterit uobis resistere cunctis diebus uitæ tuæ', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Crawford', ref: '1:5', tradDe: '1'}, );
+                $scope.latinCitations.insert({latinText: 'nullus vobis poterit resistere cunctis diebus vitae tuae', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Douay-Rheims', ref: '1:5', tradDe: '1'});
             }
 
             console.log($scope);
@@ -87,11 +98,18 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     // $scope.reset = function () {
     //     $scope.db = angular.copy($scope.originalData);
     // };
-    $scope.counter = 0;
-    $scope.verbElements = [{id:$scope.counter}];
-    $scope.newItem = function($event){
-        $scope.counter++;
-        $scope.verbElements.push({id:$scope.counter});
+    $scope.verbCounter = 0;
+    $scope.verbElements = [{id:$scope.verbCounter}];
+    $scope.newVerbItem = function($event){
+        $scope.verbCounter++;
+        $scope.verbElements.push({id:$scope.verbCounter});
+        $event.preventDefault();
+    }
+    $scope.latinCounter = 0;
+    $scope.latinExtracts = [{id:$scope.latinCounter}];
+    $scope.newLatinItem = function($event){
+        $scope.latinCounter++;
+        $scope.latinExtracts.push({id:$scope.latinCounter});
         $event.preventDefault();
     }
     $scope.highlightVerb = function(object, text) {
