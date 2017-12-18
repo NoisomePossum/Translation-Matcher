@@ -97,17 +97,28 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     //     $scope.db = angular.copy($scope.originalData);
     // };
     $scope.verbCounter = 0;
-    $scope.verbElements = [{id:$scope.verbCounter}];
-    $scope.newVerbItem = function($event){
-        $scope.verbCounter++;
-        $scope.verbElements.push({id:$scope.verbCounter});
-        $event.preventDefault();
-    }
     $scope.latinCounter = 0;
-    $scope.latinExtracts = [{id:$scope.latinCounter}];
-    $scope.newLatinItem = function($event){
-        $scope.latinCounter++;
-        $scope.latinExtracts.push({id:$scope.latinCounter});
+    // $scope.verbCounter2 = 0;
+    $scope.verbElements = [{id:$scope.verbCounter}];
+    $scope.latinExtracts = [{id:$scope.latinCounter, verbs:[{id:0}]}];
+    // $scope.latinExtracts.verbs = [];
+    // $scope.latinExtracts.verbs.push({id:$scope.verbCounter2});
+    $scope.newItem = function(itemType, extract, $event){
+        if (itemType == "verbElements") {
+            $scope.verbCounter++;
+            $scope.verbElements.push({id:$scope.verbCounter});
+            $event.preventDefault();
+        }
+        if (itemType == "latinVerbs") {
+            var lastIndex = extract.verbs[extract.verbs.length - 1].id;
+            var newId = lastIndex + 1;
+            extract.verbs.push({id:newId});
+        }
+        if (itemType == "latinExtracts") {
+            $scope.latinCounter++;
+            $scope.latinExtracts.push({id:$scope.latinCounter, verbs:[{id:0}]});
+            $event.preventDefault();
+        }
         $event.preventDefault();
     }
     $scope.highlightVerb = function(object, text) {
