@@ -129,8 +129,8 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         var displayText = document.createElement('p');
         var newText = text;
         for (i=0; i<object.length; i++) {
-            var replace = new RegExp(object[i].verb, 'g');
-            newText = newText.replace(replace, "<span class='highlightText'>" + object[i].verb + "</span>");
+            var replace = new RegExp('\\s' + object[i].verb, 'g');
+            newText = newText.replace(replace, " <span class='highlightText'>" + object[i].verb + "</span>");
         }
         return $sce.trustAsHtml(newText);
     }
