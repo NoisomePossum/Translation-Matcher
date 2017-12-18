@@ -32,7 +32,7 @@
                     </div>
                     <div class="resultColumn">
                         <div class="flex-container flexLeft" ng-repeat="l in latinCitations.data | filter : {tradDe : c.$loki}">
-                            <div class="flexText">{{ l.latinText }}</div>
+                            <div class="flexText" ng-bind-html="highlightVerb(l.verbs, l.latinText)">{{ l.latinText }}</div>
                             <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ l.oeuvre }}</div>
                             <div class="flexItem"><div class="flexHeader">Édition</div>{{ l.edition}}</div>
                             <div class="flexItem"><div class="flexHeader">Référence</div>{{ l.ref }}</div>

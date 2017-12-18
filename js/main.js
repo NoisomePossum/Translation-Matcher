@@ -11,6 +11,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     $scope.newCitation.verbs = [];
     $scope.latinCitations;
     $scope.newLatinCitation = {}; 
+    $scope.newLatinCitation.verbs = [];
     $scope.db;
     $scope.quit = function () {
         $scope.db.close();
@@ -47,8 +48,14 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             $scope.newLatinCitation.edition = $scope.latinExtracts[i].edition;
             $scope.newLatinCitation.ref = $scope.latinExtracts[i].ref;
             $scope.newLatinCitation.tradDe = $scope.citations.data[$scope.citations.data.length - 1].$loki;
+            for (j=0; j<$scope.latinExtracts[i].verbs.length; j++) {
+                $scope.newLatinCitation.verbs.push({
+                    verb: $scope.latinExtracts[i].verbs[j].verb
+                });
+            }
             $scope.latinCitations.insert($scope.newLatinCitation);
             $scope.newLatinCitation = {};
+            $scope.newLatinCitation.verbs = [];
         }
         $scope.newCitation = {};
         $scope.newCitation.verbs = [];
@@ -98,11 +105,8 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     // };
     $scope.verbCounter = 0;
     $scope.latinCounter = 0;
-    // $scope.verbCounter2 = 0;
     $scope.verbElements = [{id:$scope.verbCounter}];
     $scope.latinExtracts = [{id:$scope.latinCounter, verbs:[{id:0}]}];
-    // $scope.latinExtracts.verbs = [];
-    // $scope.latinExtracts.verbs.push({id:$scope.verbCounter2});
     $scope.newItem = function(itemType, extract, $event){
         if (itemType == "verbElements") {
             $scope.verbCounter++;
