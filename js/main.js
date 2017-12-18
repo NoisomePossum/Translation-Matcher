@@ -63,8 +63,6 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         item.editing = false;
         var saveChanges = bool;
         if (saveChanges) {
-            // var newEdit = $scope.citations.findOne({$loki:item.$loki});
-            // $scope.citations.update(newEdit);
             $scope.citations.update(item);
         }
     };
@@ -116,13 +114,11 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         var displayText = document.createElement('p');
         var newText = text;
         for (i=0; i<object.length; i++) {
-            newText = newText.replace(object[i].verb, "<span style='background-color:yellow;color:black;'>" + object[i].verb + "</span>");
+            var replace = new RegExp(object[i].verb, 'g');
+            newText = newText.replace(replace, "<span class='highlightText'>" + object[i].verb + "</span>");
         }
         return $sce.trustAsHtml(newText);
     }
-    // $scope.search = function () {
-    //     var results = $scope.latinCitations.find($loki:);
-    // }
 }]);
 // End controller function
 

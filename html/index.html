@@ -12,28 +12,39 @@
             </div>
 
             <div id="Browse" class="tabcontent">
-                <div ng-repeat="c in citations.data track by $index">
-                    <div ng-bind-html="highlightVerb(c.verbs, c.OEtext)"></div>
-                    <div ng-repeat="l in latinCitations.data | filter : {tradDe : c.$loki}">{{ l.latinText }}</div>
-                    <div>{{ c.oeuvre }}</div>
-                    <div>{{ c.edition }}</div>
-                    <div>{{ c.ref }}</div>
-                    <div ng-repeat="v in c.verbs track by $index">
-                        <div>{{ v.verb }}</div>
-                        <div>{{ v.tense }}</div>
-                        <div>{{ v.OEexpression }}</div>
-                        <div>{{ v.commentaire }}</div>
-                        <div>{{ v.transtype }}</div>
-                        <div>{{ v.discourse }}</div>
+                <div class="flex-container flexSpaced" ng-repeat="c in citations.data track by $index">
+                    <div class="flex-container flexLeft resultColumn">
+                        <div class="flexText" ng-bind-html="highlightVerb(c.verbs, c.OEtext)"></div>
+                        <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ c.oeuvre }}</div>
+                        <div class="flexItem"><div class="flexHeader">Édition</div>{{ c.edition }}</div>
+                        <div class="flexItem"><div class="flexHeader">Référence</div>{{ c.ref }}</div>
+                        <div class="flexVerb">
+                            <div class="flexHeader">Verbes</div>
+                            <div class="flex-container flexLeft" ng-repeat="v in c.verbs track by $index">
+                                    <div class="flexItem">{{ v.verb }}</div>
+                                    <div class="flexItem">{{ v.tense }}</div>
+                                    <div class="flexItem">{{ v.OEexpression }}</div>
+                                    <div class="flexItem">{{ v.commentaire }}</div>
+                                    <div class="flexItem">{{ v.transtype }}</div>
+                                    <div class="flexItem">{{ v.discourse }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
+                    <div class="resultColumn">
+                        <div class="flex-container flexLeft" ng-repeat="l in latinCitations.data | filter : {tradDe : c.$loki}">
+                            <div class="flexText">{{ l.latinText }}</div>
+                            <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ l.oeuvre }}</div>
+                            <div class="flexItem"><div class="flexHeader">Édition</div>{{ l.edition}}</div>
+                            <div class="flexItem"><div class="flexHeader">Référence</div>{{ l.ref }}</div>
+                        </div>
+                    </div>
+                    <hr class="divider">
                 </div>
             </div>
 
             <div id="addEdit" class="tabcontent">
                 <div id="header">LokiJS Demo App </div>
-                <div style="clear: both"></div>
-                <div id="main">
+                <div>
                     <h4>Insert data</h4>
                     <span>OEtext: </span><input type="text" ng-model="newCitation.OEtext" />
                     <span>Oeuvre: </span><input type="text" ng-model="newCitation.oeuvre" />

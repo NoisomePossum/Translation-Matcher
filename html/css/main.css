@@ -1,14 +1,73 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100);
-html, body { margin: 0; padding: 0; background: black; color: #ddd; font-family: "Roboto"; font-weight: 300; font-size: 15px; }
+html, body { margin: 0; padding: 0; background: black; color: #ddd; font-family: "Roboto"; font-weight: 300; font-size: 15px; width: 100%;}
 div { -webkit-box-sizing: border-box; }
 table { font-size: 1.1em; font-weight: 300; width: 100%;}
 thead { text-align: left; }
 button { background: #222; color: #999; padding: 6px; font-size: 1.2em; border: 1px solid rgba(50, 50, 50, 0.5); }
 .container { width: 100%;}
 #header { width: 100%; line-height: 100px; clear: both; vertical-align: middle; height: 100px; border-bottom: 1px solid #ddd; font-size: 2.4em; font-weight: 300;}
-#main { clear: both;}
-#results { height: 350px; background: #222; overflow-x: hidden; overflow-y: scroll;}
 
+.flex-container {
+    width: 100%;
+    display: flex;
+}
+
+.flexSpaced {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flexLeft {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.flexHeader {
+    background: white;
+    font-weight: bold;
+    color: black;
+}
+
+.flexItem {
+    margin-right: 1rem;
+    text-align: center;
+    /* margin-left: 0; */
+}
+
+.flexVerb {
+    width: 100%;
+}
+
+.resultColumn {
+    padding: 1px;
+    border: solid black;
+    width: 40%;
+}
+
+.divider {
+    width: 100%;
+}
+
+.flexText {
+    width: 100%;
+    background: url(../img/paper.png);
+    color: black;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 0.5rem 0;
+}
+
+.highlightText {
+    background-color: yellow;
+    font-weight: bold;
+    color: black;
+}
+.tabcontent {
+    width: 100%;
+}
+
+/* Begin styles for tabs */
  /* Style the tab */
 div.tab {
     overflow: hidden;
@@ -59,3 +118,4 @@ div.tab button.active {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+/* End styles for tabs */
