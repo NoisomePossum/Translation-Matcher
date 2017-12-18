@@ -36,6 +36,13 @@
                             <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ l.oeuvre }}</div>
                             <div class="flexItem"><div class="flexHeader">Édition</div>{{ l.edition}}</div>
                             <div class="flexItem"><div class="flexHeader">Référence</div>{{ l.ref }}</div>
+                            <div class="flexVerb">
+                                <div class="flexHeader">Verbes</div>
+                                <div class="flex-container flexLeft" ng-repeat="lv in l.verbs track by $index">
+                                        <div class="flexItem">{{ lv.verb }}</div>
+                                        <div class="flexItem">{{ lv.tense }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr class="divider">
@@ -75,6 +82,7 @@
                             <div ng-repeat="verb2 in extract.verbs">
                                 <div id={{ verb2.id }} >
                                     <span>Verb: </span><input type="text" ng-model="verb2.verb" />
+                                    <span>Temps: </span><input type="text" ng-model="verb2.tense" />
                                     <span><a href ng-click="newItem('latinVerbs', extract)">+</a></span>
                                     <span ng-hide="extract.verbs.length == 1">
                                         <a href ng-click="extract.verbs.splice($index, 1)">remove</a>

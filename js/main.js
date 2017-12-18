@@ -50,7 +50,8 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             $scope.newLatinCitation.tradDe = $scope.citations.data[$scope.citations.data.length - 1].$loki;
             for (j=0; j<$scope.latinExtracts[i].verbs.length; j++) {
                 $scope.newLatinCitation.verbs.push({
-                    verb: $scope.latinExtracts[i].verbs[j].verb
+                    verb: $scope.latinExtracts[i].verbs[j].verb,
+                    tense: $scope.latinExtracts[i].verbs[j].tense
                 });
             }
             $scope.latinCitations.insert($scope.newLatinCitation);
@@ -87,8 +88,8 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             }
             if ($scope.latinCitations === null) {
                 $scope.latinCitations = $scope.db.addCollection('latinCitations');
-                $scope.latinCitations.insert({latinText: 'Nullus poterit uobis resistere cunctis diebus uitæ tuæ', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Crawford', ref: '1:5', tradDe: '1'}, );
-                $scope.latinCitations.insert({latinText: 'nullus vobis poterit resistere cunctis diebus vitae tuae', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Douay-Rheims', ref: '1:5', tradDe: '1'});
+                $scope.latinCitations.insert({latinText: 'Nullus poterit uobis resistere cunctis diebus uitæ tuæ', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Crawford', ref: '1:5', verbs: [{verb: 'poterit'}], tradDe: '1'}, );
+                $scope.latinCitations.insert({latinText: 'nullus vobis poterit resistere cunctis diebus vitae tuae', temps: 'futur indicatif actif, 3 sg (inf. posse)', oeuvre: 'Joshua', edition: 'Douay-Rheims', ref: '1:5', verbs: [{verb: 'poterit'}], tradDe: '1'});
             }
 
             console.log($scope);
