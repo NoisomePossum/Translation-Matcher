@@ -15,32 +15,32 @@
                 <div class="flex-container flexSpaced" ng-repeat="c in citations.data track by $index">
                     <div class="flex-container flexLeft resultColumn">
                         <div class="flexText" ng-bind-html="highlightVerb(c.verbs, c.OEtext)"></div>
-                        <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ c.oeuvre }}</div>
-                        <div class="flexItem"><div class="flexHeader">Édition</div>{{ c.edition }}</div>
-                        <div class="flexItem"><div class="flexHeader">Référence</div>{{ c.ref }}</div>
+                        <div class="flexItem"><div class="flexHeader">Oeuvre</div><div class="flexBody">{{ c.oeuvre }}</div></div>
+                        <div class="flexItem"><div class="flexHeader">Édition</div><div class="flexBody">{{ c.edition }}</div></div>
+                        <div class="flexItem"><div class="flexHeader">Référence</div><div class="flexBody">{{ c.ref }}</div></div>
                         <div class="flexVerb">
                             <div class="flexHeader">Verbes</div>
                             <div class="flex-container flexLeft" ng-repeat="v in c.verbs track by $index">
-                                    <div class="flexItem">{{ v.verb }}</div>
-                                    <div class="flexItem">{{ v.tense }}</div>
-                                    <div class="flexItem">{{ v.OEexpression }}</div>
-                                    <div class="flexItem">{{ v.commentaire }}</div>
-                                    <div class="flexItem">{{ v.transtype }}</div>
-                                    <div class="flexItem">{{ v.discourse }}</div>
+                                <div class="flexItem"><div class="flexHeader">Verb</div><div class="flexBody">{{ v.verb }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Temps</div><div class="flexBody">{{ v.tense }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Expression</div><div class="flexBody">{{ v.OEexpression }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Commentaire</div><div class="flexBody">{{ v.commentaire }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Type trad</div><div class="flexBody">{{ v.transtype }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Discours</div><div class="flexBody">{{ v.discourse }}</div></div>
                             </div>
                         </div>
                     </div>
                     <div class="resultColumn">
                         <div class="flex-container flexLeft" ng-repeat="l in latinCitations.data | filter : {tradDe : c.$loki}">
                             <div class="flexText" ng-bind-html="highlightVerb(l.verbs, l.latinText)">{{ l.latinText }}</div>
-                            <div class="flexItem"><div class="flexHeader">Oeuvre</div>{{ l.oeuvre }}</div>
-                            <div class="flexItem"><div class="flexHeader">Édition</div>{{ l.edition}}</div>
-                            <div class="flexItem"><div class="flexHeader">Référence</div>{{ l.ref }}</div>
+                            <div class="flexItem"><div class="flexHeader">Oeuvre</div><div class="flexBody">{{ l.oeuvre }}</div></div>
+                            <div class="flexItem"><div class="flexHeader">Édition</div><div class="flexBody">{{ l.edition}}</div></div>
+                            <div class="flexItem"><div class="flexHeader">Référence</div><div class="flexBody">{{ l.ref }}</div></div>
                             <div class="flexVerb">
                                 <div class="flexHeader">Verbes</div>
                                 <div class="flex-container flexLeft" ng-repeat="lv in l.verbs track by $index">
-                                        <div class="flexItem">{{ lv.verb }}</div>
-                                        <div class="flexItem">{{ lv.tense }}</div>
+                                    <div class="flexItem"><div class="flexHeader">Verbe</div><div class="flexBody">{{ lv.verb }}</div></div>
+                                    <div class="flexItem"><div class="flexHeader">Temps</div><div class="flexBody">{{ lv.tense }}</div></div>
                                 </div>
                             </div>
                         </div>
@@ -50,55 +50,103 @@
             </div>
 
             <div id="addEdit" class="tabcontent">
-                <div id="header">LokiJS Demo App </div>
                 <div>
                     <h4>Insert data</h4>
-                    <span>OEtext: </span><input type="text" ng-model="newCitation.OEtext" />
-                    <span>Oeuvre: </span><input type="text" ng-model="newCitation.oeuvre" />
-                    <span>Edition: </span><input type="text" ng-model="newCitation.edition" /> 
-                    <span>Référence: </span><input type="text" ng-model="newCitation.ref" /> 
-                    <span>Version Of: </span><input type="number" ng-model="newCitation.versionOf" /> 
-                    <br />
-                    <div ng-repeat="verb in verbElements">
-                        <div id={{ verb.id }} >
-                            <span>Verb: </span><input type="text" ng-model="verb.verb" />
-                            <span>Catégorie(tense equivalence): </span><input type="text" ng-model="verb.tense" />
-                            <span>Expression du futur en OE: </span><input type="text" ng-model="verb.OEexpression" />
-                            <span>Commentaire: </span><input type="text" ng-model="verb.commentaire" />
-                            <span>Type de traduction: </span><input type="text" ng-model="verb.transtype" />
-                            <span>Type de discours: </span><input type="text" ng-model="verb.discourse" />
-                            <span><a href ng-click="newItem('verbElements')">+</a></span>
-                            <span ng-hide="verbElements.length == 1">
-                                <a href ng-click="verbElements.splice($index, 1)">remove</a>
-                            </span>
+
+                    <div class="flex-container flexLeft form">
+                        <div>
+                            <label>OEtext: </label><input type="text" ng-model="newCitation.OEtext" />
                         </div>
-                    </div>
-                    <div ng-repeat="extract in latinExtracts">
-                        <div id={{ extract.id }} >
-                            <span>latText : </span><input type="text" ng-model="extract.latinText" />
-                            <span>Oeuvre : </span><input type="text" ng-model="extract.oeuvre" />
-                            <span>Edition : </span><input type="text" ng-model="extract.edition" />
-                            <span>Référence : </span><input type="text" ng-model="extract.ref" />
-                            <div ng-repeat="verb2 in extract.verbs">
-                                <div id={{ verb2.id }} >
-                                    <span>Verb: </span><input type="text" ng-model="verb2.verb" />
-                                    <span>Temps: </span><input type="text" ng-model="verb2.tense" />
-                                    <span><a href ng-click="newItem('latinVerbs', extract)">+</a></span>
-                                    <span ng-hide="extract.verbs.length == 1">
-                                        <a href ng-click="extract.verbs.splice($index, 1)">remove</a>
+                        <div>
+                            <label>Oeuvre: </label><input type="text" ng-model="newCitation.oeuvre" />
+                        </div>
+                        <div>
+                            <label>Edition: </label><input type="text" ng-model="newCitation.edition" /> 
+                        </div>
+                        <div>
+                            <label>Référence: </label><input type="text" ng-model="newCitation.ref" /> 
+                        </div>
+                        <!-- <span>Version Of: </span><input type="number" ng-model="newCitation.versionOf" /> --> 
+                        <br />
+
+                        <div class="flex-container flexLeft formVerb ">
+
+                            <div ng-repeat="verb in verbElements">
+                                <div id={{ verb.id }} >
+                                    <div>
+                                        <label>Verb: </label><input type="text" ng-model="verb.verb" />
+                                    </div>
+                                    <div>
+                                        <label>Catégorie(tense equivalence): </label><input type="text" ng-model="verb.tense" />
+                                    </div>
+                                    <div>
+                                        <label>Expression du futur en OE: </label><input type="text" ng-model="verb.OEexpression" />
+                                    </div>
+                                    <div>
+                                        <label>Commentaire: </label><input type="text" ng-model="verb.commentaire" />
+                                    </div>
+                                    <div>
+                                        <label>Type de traduction: </label><input type="text" ng-model="verb.transtype" />
+                                    </div>
+                                    <div>
+                                        <label>Type de discours: </label><input type="text" ng-model="verb.discourse" />
+                                    </div>
+                                    <span><a href ng-click="newItem('verbElements')">+</a></span>
+                                    <span ng-hide="verbElements.length == 1">
+                                        <a href ng-click="verbElements.splice($index, 1)">remove</a>
                                     </span>
                                 </div>
                             </div>
-                            <span><a href ng-click="newItem('latinExtracts')">+</a></span>
-                            <span ng-hide="latinExtracts.length == 1">
-                                <a href ng-click="latinExtracts.splice($index, 1)">remove</a>
-                            </span>
+
                         </div>
+
+                        <div ng-repeat="extract in latinExtracts">
+                            <div class="flex-container flexLeft" id={{ extract.id }} >
+                                <div>
+                                    <label>latText : </label><input type="text" ng-model="extract.latinText" />
+                                </div>
+                                <div>
+                                    <label>Oeuvre : </label><input type="text" ng-model="extract.oeuvre" />
+                                </div>
+                                <div>
+                                    <label>Edition : </label><input type="text" ng-model="extract.edition" />
+                                </div>
+                                <div>
+                                    <label>Référence : </label><input type="text" ng-model="extract.ref" />
+                                </div>
+
+                                <div class="flex-container flexLeft formVerb">
+                                    <div ng-repeat="verb2 in extract.verbs">
+                                        <div id={{ verb2.id }} >
+                                            <div>
+                                                <label>Verb: </label><input type="text" ng-model="verb2.verb" />
+                                            </div>
+                                            <div>
+                                                <label>Temps: </label><input type="text" ng-model="verb2.tense" />
+                                            </div>
+                                            <span><a href ng-click="newItem('latinVerbs', extract)">+</a></span>
+                                            <span ng-hide="extract.verbs.length == 1">
+                                                <a href ng-click="extract.verbs.splice($index, 1)">remove</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span><a href ng-click="newItem('latinExtracts')">+</a></span>
+                                <span ng-hide="latinExtracts.length == 1">
+                                    <a href ng-click="latinExtracts.splice($index, 1)">remove</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="formButton">
+                            <button ng-click="insert(); verbCounter=0; verbElements = [{id:counter}];">Insert</button>
+                        </div>
+
                     </div>
-                    <br />
-                    <button ng-click="insert(); verbCounter=0; verbElements = [{id:counter}];" style="vertical-align: middle">Insert</button>
+
+
                     <div id="displayDB">
-                        <table style="border: 0">
+                        <table class="results" style="border: 0">
                             <thead>
                                 <th></th>
                                 <th>ID</th>

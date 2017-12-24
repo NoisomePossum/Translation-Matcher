@@ -1,7 +1,55 @@
-html, body { margin: 0; padding: 0; background: black; color: #ddd; font-family: "Roboto"; font-weight: 300; font-size: 15px; width: 100%;}
+html, body { margin: 0; padding: 0; background: white; color: black; font-family: "Roboto"; font-weight: 300; font-size: 15px; width: 100%;}
 div { -webkit-box-sizing: border-box; }
-table { font-size: 1.1em; font-weight: 300; width: 100%;}
-thead { text-align: left; }
+
+.form {
+    background: url(../img/paper.png);
+}
+
+.form label {
+    display:block;
+}
+
+.formVerb {
+    width: 100%;
+    margin-left: 2rem;
+    background: yellow;
+}
+
+.formButton {
+    width: 100%;
+}
+
+.formButton button {
+    align-self: flex-end;
+    margin-left: 1rem;
+}
+
+
+.results {
+    font-size: 1.1em; 
+    font-weight: 300; 
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+.results td, .results th {
+   border: 1px solid #ddd; 
+   padding: 8px;
+}
+.results tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.results tr:hover {
+    background-color: #ddd;
+}
+.results th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color: white;
+}
+
 button { background: #222; color: #999; padding: 6px; font-size: 1.2em; border: 1px solid rgba(50, 50, 50, 0.5); }
 .container { width: 100%;}
 #header { width: 100%; line-height: 100px; clear: both; vertical-align: middle; height: 100px; border-bottom: 1px solid #ddd; font-size: 2.4em; font-weight: 300;}
@@ -9,6 +57,16 @@ button { background: #222; color: #999; padding: 6px; font-size: 1.2em; border: 
 .flex-container {
     width: 100%;
     display: flex;
+}
+
+.resultColumn {
+    padding: 1px;
+    border: solid black;
+    width: 40%;
+}
+
+.divider {
+    width: 100%;
 }
 
 .flexSpaced {
@@ -21,32 +79,6 @@ button { background: #222; color: #999; padding: 6px; font-size: 1.2em; border: 
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
-}
-
-.flexHeader {
-    background: white;
-    font-weight: bold;
-    color: black;
-}
-
-.flexItem {
-    margin-right: 1rem;
-    text-align: center;
-    /* margin-left: 0; */
-}
-
-.flexVerb {
-    width: 100%;
-}
-
-.resultColumn {
-    padding: 1px;
-    border: solid black;
-    width: 40%;
-}
-
-.divider {
-    width: 100%;
 }
 
 .flexText {
@@ -63,6 +95,30 @@ button { background: #222; color: #999; padding: 6px; font-size: 1.2em; border: 
     font-weight: bold;
     color: black;
 }
+
+.flexHeader {
+    background: blue;
+    font-weight: bold;
+    color: black;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.flexBody {
+    background: grey;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.flexItem {
+    margin-right: 1rem;
+    /* margin-left: 0; */
+}
+
+.flexVerb {
+    width: 100%;
+}
+
 .tabcontent {
     width: 100%;
 }
