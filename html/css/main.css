@@ -19,7 +19,7 @@ div { -webkit-box-sizing: border-box; }
     width: 100%;
 }
 
-.formButton button {
+.formButton buttont {
     align-self: flex-end;
     margin-left: 1rem;
 }
