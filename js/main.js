@@ -42,6 +42,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             });
         }
         $scope.citations.insert($scope.newCitation);
+
         for (i=0; i<$scope.latinExtracts.length; i++) {
             $scope.newLatinCitation.latinText = $scope.latinExtracts[i].latinText;
             $scope.newLatinCitation.oeuvre = $scope.latinExtracts[i].oeuvre;
@@ -104,15 +105,21 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     // $scope.reset = function () {
     //     $scope.db = angular.copy($scope.originalData);
     // };
-    $scope.verbCounter = 0;
+    $scope.oeCounter = 0;
+    // $scope.verbCounter = 0;
     $scope.latinCounter = 0;
-    $scope.verbElements = [{id:$scope.verbCounter}];
+    $scope.oeExtracts = [{id:$scope.oeCounter, verbs:[{id:0}]}];
+    // $scope.verbElements = [{id:$scope.verbCounter}];
     $scope.latinExtracts = [{id:$scope.latinCounter, verbs:[{id:0}]}];
     $scope.newItem = function(itemType, extract, $event){
-        if (itemType == "verbElements") {
-            $scope.verbCounter++;
-            $scope.verbElements.push({id:$scope.verbCounter});
-            $event.preventDefault();
+        if (itemType == "oeExtracts") {
+            $scope.oeCounter++;
+            $scope.oeExtracts.push({id:$scope.oeCounter, verbs:[{id:0}]});
+        }
+        if (itemType == "oeVerbs") {
+            var lastIndex = extract.verbs[extract.verbs.length - 1].id;
+            var newId = lastIndex + 1;
+            extract.verbs.push({id:newId});
         }
         if (itemType == "latinVerbs") {
             var lastIndex = extract.verbs[extract.verbs.length - 1].id;
@@ -122,7 +129,6 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
         if (itemType == "latinExtracts") {
             $scope.latinCounter++;
             $scope.latinExtracts.push({id:$scope.latinCounter, verbs:[{id:0}]});
-            $event.preventDefault();
         }
         $event.preventDefault();
     }
