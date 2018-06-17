@@ -8,6 +8,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     var DB_FILE = 'oe_database.json';
     $scope.citations;
     $scope.newCitation = {};
+    $scope.newCitation.texts = [];
     $scope.newCitation.verbs = [];
     $scope.latinCitations;
     $scope.newLatinCitation = {}; 
@@ -31,24 +32,46 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     }); 
 
     // Called when the Insert button is pressed on the HTML page
+    $scope.firstId = 1;
     $scope.insert = function () {
-        for (i=0; i<$scope.verbElements.length; i++) {
-            $scope.newCitation.verbs.push({
-                verb: $scope.verbElements[i].verb, 
-                OEexpression: $scope.verbElements[i].OEexpression,
-                commentaire: $scope.verbElements[i].commentaire,
-                transtype: $scope.verbElements[i].transtype,
-                discourse: $scope.verbElements[i].discourse
+        // for (i=0; i<$scope.verbElements.length; i++) {
+        //     $scope.newCitation.verbs.push({
+        //         verb: $scope.verbElements[i].verb, 
+        //         OEexpression: $scope.verbElements[i].OEexpression,
+        //         commentaire: $scope.verbElements[i].commentaire,
+        //         transtype: $scope.verbElements[i].transtype,
+        //         discourse: $scope.verbElements[i].discourse
+        //     });
+        // }
+        // $scope.citations.insert($scope.newCitation);
+        // $scope.newCitation = {};
+        // $scope.newCitation.verbs = [];
+
+        $scope.firstId ++;
+        for (i=0; i<$scope.oeExtracts.length; i++) {
+            $scope.newCitation.id = $scope.firstId;
+            $scope.newCitation.texts.push({
+                OEtext: $scope.oeExtracts[i].OEtext,
+                oeuvre: $scope.oeExtracts[i].oeuvre,
+                edition: $scope.oeExtracts[i].edition,
+                ref: $scope.oeExtracts[i].ref,
             });
+            for (j=0; j<$scope.oeExtracts[i].verbs.length; j++) {
+                $scope.newCitation.verbs.push({
+                    verb: $scope.oeExtracts[i].verbs[j].verb,
+                    tense: $scope.oeExtracts[i].verbs[j].tense
+                });
+            }
         }
-        $scope.citations.insert($scope.newCitation);
+        $scope.latinCitations.insert($scope.newCitation);
+
 
         for (i=0; i<$scope.latinExtracts.length; i++) {
             $scope.newLatinCitation.latinText = $scope.latinExtracts[i].latinText;
             $scope.newLatinCitation.oeuvre = $scope.latinExtracts[i].oeuvre;
             $scope.newLatinCitation.edition = $scope.latinExtracts[i].edition;
             $scope.newLatinCitation.ref = $scope.latinExtracts[i].ref;
-            $scope.newLatinCitation.tradDe = $scope.citations.data[$scope.citations.data.length - 1].$loki;
+            $scope.newLatinCitation.tradDe = $scope.newCitation.id;
             for (j=0; j<$scope.latinExtracts[i].verbs.length; j++) {
                 $scope.newLatinCitation.verbs.push({
                     verb: $scope.latinExtracts[i].verbs[j].verb,
@@ -60,6 +83,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             $scope.newLatinCitation.verbs = [];
         }
         $scope.newCitation = {};
+        $scope.newCitation.texts = [];
         $scope.newCitation.verbs = [];
     };
     $scope.delete = function (i) {
@@ -85,7 +109,7 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
             // initialize empty database if one does not already exist
             if ($scope.citations === null) {
                 $scope.citations = $scope.db.addCollection('citations');
-                $scope.citations.insert({OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', verbs: [{verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: ''}], versionOf: null});
+                $scope.citations.insert({id: 1, texts:[{OEtext: 'Ne mæg eow nan þing wiðstandan eallum dagum þines lifes.', oeuvre: 'OEH-Joshua', edition: 'Marsden', ref:'1:5', verbs: [{verb: 'mæg', tense: 'futur', OEexpression: 'present form', commentaire: '', transtype: '', discourse: ''}]}]});
             }
             if ($scope.latinCitations === null) {
                 $scope.latinCitations = $scope.db.addCollection('latinCitations');
@@ -106,10 +130,8 @@ app.controller('MatchController', ['$scope', '$sce', function ($scope, $sce) {
     //     $scope.db = angular.copy($scope.originalData);
     // };
     $scope.oeCounter = 0;
-    // $scope.verbCounter = 0;
     $scope.latinCounter = 0;
     $scope.oeExtracts = [{id:$scope.oeCounter, verbs:[{id:0}]}];
-    // $scope.verbElements = [{id:$scope.verbCounter}];
     $scope.latinExtracts = [{id:$scope.latinCounter, verbs:[{id:0}]}];
     $scope.newItem = function(itemType, extract, $event){
         if (itemType == "oeExtracts") {
